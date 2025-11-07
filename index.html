@@ -1,82 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .MyWatch {
-            text-align: center;
-        }
-        .MyWatch .H {
-            font-size: 70px;   /* Time size */
-            font-weight: bold;
-        }
-        .MyWatch .M {
-            font-size: 70px;   /* AM/PM size */
-            font-weight: bold;
-            margin-left: 5px;
-        }
-        .MyWatch .date {
-            font-size: 40px;   /* Date size */
-            margin-top: 10px;
-            display: block;
-        }
-    </style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Professional Digital Clock</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    
-    <div class="MyWatch">
-        <span class="H"></span><span class="M"></span>
-        <span class="date"></span>
+
+  <div class="container">
+    <div class="time" aria-live="polite" aria-atomic="true">
+      <span id="hours">00</span>:
+      <span id="minutes">00</span>:
+      <span id="seconds">00</span>
+      <span id="ampm" class="ampm">AM</span>
     </div>
+    <div class="date" aria-live="polite" aria-atomic="true" id="date">Loading date...</div>
 
-    <script>
-        function myTime(){
-            var myDate = new Date();
+    <div class="controls" role="region" aria-label="Clock settings">
+      <label for="format-select">Time Format:</label>
+      <select id="format-select" aria-describedby="format-help">
+        <option value="12">12-Hour</option>
+        <option value="24">24-Hour</option>
+      </select>
 
-            var min = (myDate.getMinutes() < 10) ? "0" + myDate.getMinutes() : myDate.getMinutes();
-            var sec = (myDate.getSeconds() < 10) ? "0" + myDate.getSeconds() : myDate.getSeconds();
-            var M = (myDate.getHours() >= 12) ? "PM" : "AM";
+      <label for="show-seconds">Show Seconds
+        <input type="checkbox" id="show-seconds" checked />
+      </label>
 
-            var hr;
-            if(myDate.getHours() == 0){
-                hr = 12;
-            } else if(myDate.getHours() > 12){
-                hr = myDate.getHours() - 12;
-            } else {
-                hr = myDate.getHours();
-            }
+      <label for="mode-toggle">Dark Mode
+        <label class="switch">
+          <input type="checkbox" id="mode-toggle" checked />
+          <span class="slider"></span>
+        </label>
+      </label>
+    </div>
+  </div>
 
-            document.querySelector(".H").innerText = hr + ":" + min + ":" + sec;
-            document.querySelector(".M").innerText = M;
-
-            var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-            var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-            var todayDay = days[myDate.getDay()];
-            var todayMonth = months[myDate.getMonth()];
-            var todayDate = myDate.getDate();
-
-            document.querySelector(".date").innerText = todayDay + ", " + todayMonth + " " + todayDate;
-        }
-
-        setInterval(myTime, 1000);
-        myTime();
-    </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
